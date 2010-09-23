@@ -3,5 +3,7 @@
 
 . ~/bin/dotfiles/zsh/config
 . ~/bin/dotfiles/zsh/aliases
+. ~/bin/dotfiles/zsh/colors
 
-
+# export GREP_OPTIONS=' --color=auto'
+# export CLICOLOR=1

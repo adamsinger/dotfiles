@@ -7,3 +7,5 @@ export PATH=$PATH:~/bin
 export LC_CTYPE=en_US.UTF-8
 
 export EDITOR="mate -w"
+
+if [[ -s /Users/singera/.rvm/scripts/rvm ]] ; then source /Users/singera/.rvm/scripts/rvm ; fi
