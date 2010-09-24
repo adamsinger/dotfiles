@@ -21,6 +21,7 @@ unset LSCOLORS
 export CLICOLOR=1
 export LS_COLORS=exfxcxdxbxegedabagacad
 
-alias ls='ls --color=auto'
-
-eval `dircolors`
+if [ "$TERM" != "dumb" ] && [ -x /usr/bin/dircolors ]; then
+  alias ls='ls --color=auto'
+  eval `dircolors`
+fi
