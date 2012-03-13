@@ -1,11 +1,14 @@
 # Finished adapting your PATH environment variable for use with MacPorts.
 
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/Developer/usr/bin:$PATH"
 # MacPorts Installer addition on 2010-02-22_at_11:04:45: adding an appropriate PATH variable for use with MacPorts.
 export PATH=/opt/local/bin:/opt/local/sbin:/opt/nginx/sbin:$PATH
 export PATH=$PATH:~/bin
 export LC_CTYPE=en_US.UTF-8
 
 export EDITOR="mate -w"
+export CC=gcc-4.2
 
 if [[ -s /Users/singera/.rvm/scripts/rvm ]] ; then source /Users/singera/.rvm/scripts/rvm ; fi
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

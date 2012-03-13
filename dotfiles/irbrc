@@ -1,7 +1,10 @@
-require 'rubygems'
+require 'rubygems' rescue nil
 require 'wirble'
+
 Wirble.init
 Wirble.colorize
+
+IRB.conf[:AUTO_INDENT] = true
 
 def change_log(stream)
   ActiveRecord::Base.logger = Logger.new(stream)
@@ -59,11 +62,11 @@ begin # ANSI codes
 end
 
 begin # Custom Prompt
-  if ENV['RAILS_ENV']
-    name = "#{ENV['RAILS_ENV']}"
-    if ENV['RAILS_ENV'] == "development"
+  if env = ENV["RAILS_ENV"] || (Rails && Rails.env)
+    name = env
+    if name == "development"
       colors = ANSI_GREEN
-    elsif ENV['RAILS_ENV'] == "production"
+    elsif name == "production"
       colors = ANSI_BLUE
     else
       colors = ANSI_YELLOW
@@ -84,6 +87,15 @@ begin # Custom Prompt
     }
     IRB.conf[:PROMPT_MODE] = :SD
   end
-end
 
-  
+  # When you're using Rails 2 console, show queries in the console
+  # require 'logger'
+  # fallback_logger = Logger.new
+  # RAILS_DEFAULT_LOGGER = Posterous::ScribeLogger::Logger.new({:host => "localhost", :port => 1469}, fallback_logger)
+
+  # Log to STDOUT if in Rails
+  # if ENV["RAILS_ENV"]
+  #   require 'logger'
+  #   RAILS_DEFAULT_LOGGER = Logger.new(STDOUT)
+  # end
+end
