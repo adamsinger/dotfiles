@@ -1,9 +1,9 @@
 # Symlink to this file from ~/.zshrc
 # You should also symlink ~/.zshenv to zsh/env in this directory
 
-. ~/bin/dotfiles/zsh/config
-. ~/bin/dotfiles/zsh/aliases
-. ~/bin/dotfiles/zsh/colors
+. ~/bin/dotfiles/dotfiles/zsh/config
+. ~/bin/dotfiles/dotfiles/zsh/aliases
+. ~/bin/dotfiles/dotfiles/zsh/colors
 
 # export GREP_OPTIONS=' --color=auto'
 # export CLICOLOR=1

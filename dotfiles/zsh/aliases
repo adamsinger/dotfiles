@@ -2,7 +2,7 @@
 
 # Utility
 alias reload='source ~/bin/dotfiles/zsh/aliases'
-alias ea='mate -w ~/bin/dotfiles/zsh/aliases && reload' # Edit aliases
+alias ea='mate -w ~/bin/dotfiles/dotfiles/zsh/aliases && reload' # Edit aliases
 alias ee="mate ~/bin/dotfiles/zsh/env"
 
 # Quicker cd
@@ -11,6 +11,10 @@ function cr() {
  cd ~/repos/$*
 }
 
+alias cdt='cd ~/workspace/twitter/'
+function p() {
+  ps -ax | grep $1
+}
 # Common -- Some are from Damian Conway
 alias a='ls -A' # -A all except literal . ..
 alias la="ls -A -l -G"
@@ -21,6 +25,10 @@ function cdc() {
     cd $1; ls
 }
 alias cls='clear; ls'
+alias ds='bundle exec rake dev:server'
+alias ks='bundle exec rake kestrel:start'
+alias ms='bundle exec rake memcached:start'
+alias djs='bundle exec rake dev:js:server'
 alias h='history'
 alias l.='ls -d .[^.]*'
 alias l='ls -lhGt'  # -l long listing, most recent first
@@ -146,7 +154,6 @@ alias nstop='sudo launchctl unload -w /Library/LaunchDaemons/org.macports.nginx.
 alias nvstart='sudo launchctl load -w /Library/LaunchDaemons/org.macports.varnishnginx.plist'
 alias nvstop='sudo launchctl unload -w /Library/LaunchDaemons/org.macports.varnishnginx.plist'
 alias mr='mongrel_rails start'
-alias ms='mongrel_rails stop'
 alias rp='touch tmp/restart.txt'
 alias sc='bundle exec ./script/console'
 alias sg='./script/generate'
@@ -198,6 +205,13 @@ function wav2mp3() {
   lame -h -V 0 $1.wav $1.mp3
 }
 
+function gr() {
+  OLD_BRANCH=`git status | grep "On branch" | awk '{print $4}'`
+  git checkout master
+  git fetch
+  git pull
+  git checkout $OLD_BRANCH
+}
 
 # XCode
 # Analyze release build
