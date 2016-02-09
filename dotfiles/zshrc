@@ -11,5 +11,7 @@ export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/Developer/usr/b
 #
 # export PATH="$HOME/.rbenv/bin:$PATH"
 # eval "$(rbenv init -)"
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-export PATH=$HOME/.rbenv/bin:$PATH
+if which rbenv &> /dev/null; then
+  eval "$(rbenv init -)"
+  export PATH=$HOME/.rbenv/bin:$PATH
+fi
