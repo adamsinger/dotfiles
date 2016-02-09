@@ -2,9 +2,9 @@
 # You should also symlink ~/.zshenv to zsh/env in this directory
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/Developer/usr/bin:$PATH
 
-. ~/bin/dotfiles/zsh/config
-. ~/bin/dotfiles/zsh/aliases
-. ~/bin/dotfiles/zsh/colors
+. ~/dotfiles/dotfiles/zsh/config
+. ~/dotfiles/dotfiles/zsh/aliases
+. ~/dotfiles/dotfiles/zsh/colors
 
 # export GREP_OPTIONS=' --color=auto'
 # export CLICOLOR=1
