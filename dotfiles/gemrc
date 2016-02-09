@@ -1,13 +1,9 @@
---- 
-:benchmark: false
-:bulk_threshold: 1000
-:verbose: true
-:sources: 
-- http://rubygems.org/
-- http://gems.local.twitter.com
-- http://gems.local.twitter.com/
-- http://gems.local.twitter.com/
-- http://gems.local.twitter.com/
-:update_sources: true
+---
 :backtrace: false
-gem: --no-ri --no-rdoc
+:bulk_threshold: 1000
+:sources:
+- http://rubygems.org/
+:update_sources: true
+:verbose: true
+benchmark: false
+gem: "--no-ri --no-rdoc"

@@ -1,9 +1,10 @@
 # Command Enhancements
+eval "$(hub alias -s)"
 
 # Utility
 alias reload='source ~/bin/dotfiles/zsh/aliases'
-alias ea='mate -w ~/bin/dotfiles/dotfiles/zsh/aliases && reload' # Edit aliases
-alias ee="mate ~/bin/dotfiles/zsh/env"
+alias ea='vim ~/bin/dotfiles/zsh/aliases && reload' # Edit aliases
+alias ee="vim ~/bin/dotfiles/zsh/env"
 
 # Quicker cd
 alias cg='cd /Library/Ruby/Gems/1.8/gems/'
@@ -11,7 +12,14 @@ function cr() {
  cd ~/repos/$*
 }
 
+alias cdo='cd ~/workspace/onward/'
 alias cdt='cd ~/workspace/twitter/'
+alias cdv='cd ~/workspace/vivid-mountain-4629/'
+alias cdh='cd ~/workspace/hyke'
+alias cdw='cd ~/workspace'
+alias cdi='cd ~/workspace/hyke-ios'
+alias cda='cd ~/workspace/hyke_api'
+alias cdg='cd ~/workspace/Gains'
 function p() {
   ps -ax | grep $1
 }
@@ -25,7 +33,7 @@ function cdc() {
     cd $1; ls
 }
 alias cls='clear; ls'
-alias ds='bundle exec rake dev:server'
+alias ds='foreman start -f Procfile.dev'
 alias ks='bundle exec rake kestrel:start'
 alias ms='bundle exec rake memcached:start'
 alias djs='bundle exec rake dev:js:server'
@@ -97,6 +105,7 @@ alias s='git status'
 alias eg='mate .git/config'
 alias gm='git mergetool'
 alias grc='git rebase --continue'
+alias gpom='git pull origin master'
 
 alias g='bundle exec guard -g dev'
 # Git clone from GitHub
@@ -276,4 +285,3 @@ function __rm_single_file(){
         echo "No such file or directory: $file"
     fi
 }
-
