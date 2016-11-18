@@ -1,8 +1,14 @@
+
 autoload -U colors
 colors
 setopt prompt_subst
+PROMPT_COLOR=$fg_bold[green]
+
+if [[ $(uname) = 'Linux' ]]; then
+  PROMPT_COLOR=$fg_bold[blue]
+fi
 PROMPT='
-%~ %{$fg_bold[green]%}$(vcprompt -f "[%b] (%m%a%u)")
+[%n] %~ %{%(#~$fg_bold[red]~${PROMPT_COLOR})%}$(vcprompt -f "[%b] (%m%a%u)")
 → %{$reset_color%}'
 
 # Set RPROMPT to have info show up on the right, too.

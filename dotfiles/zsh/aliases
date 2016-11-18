@@ -1,10 +1,9 @@
 # Command Enhancements
-eval "$(hub alias -s)"
 
 # Utility
-alias reload='source ~/bin/dotfiles/zsh/aliases'
-alias ea='vim ~/bin/dotfiles/zsh/aliases && reload' # Edit aliases
-alias ee="vim ~/bin/dotfiles/zsh/env"
+alias reload='source ~/dotfiles/dotfiles/zsh/aliases'
+alias ea='vim ~/dotfiles/dotfiles/zsh/aliases && reload' # Edit aliases
+alias ee="vim ~/dotfiles/dotfiles/zsh/env"
 
 # Quicker cd
 alias cg='cd /Library/Ruby/Gems/1.8/gems/'
