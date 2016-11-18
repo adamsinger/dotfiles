@@ -13,11 +13,12 @@ function cr() {
 }
 
 alias cdo='cd ~/workspace/onward/'
-alias cdt='cd ~/workspace/twitter/'
+alias cdod='cd ~/workspace/onward-data-pipeline/'
+
+alias cdm='cd ~/workspace/onwardmac'
 alias cdv='cd ~/workspace/vivid-mountain-4629/'
-alias cdh='cd ~/workspace/hyke'
 alias cdw='cd ~/workspace'
-alias cdi='cd ~/workspace/hyke-ios'
+alias cdi='cd ~/workspace/onward-ios'
 alias cda='cd ~/workspace/hyke_api'
 alias cdg='cd ~/workspace/Gains'
 function p() {
