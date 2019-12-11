@@ -285,3 +285,5 @@ function __rm_single_file(){
         echo "No such file or directory: $file"
     fi
 }
+
+alias code="nvm use default; code"

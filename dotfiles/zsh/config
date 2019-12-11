@@ -8,7 +8,7 @@ if [[ $(uname) = 'Linux' ]]; then
   PROMPT_COLOR=$fg_bold[blue]
 fi
 PROMPT='
-[%n] %~ %{%(#~$fg_bold[red]~${PROMPT_COLOR})%}$(vcprompt -f "[%b] (%m%a%u)")
+$fg_bold[blue][%n]$reset_color %~ %{%(#~$fg_bold[red]~${PROMPT_COLOR})%}$(vcprompt -f "[%b] (%m%a%u)")
 → %{$reset_color%}'
 
 # Set RPROMPT to have info show up on the right, too.
