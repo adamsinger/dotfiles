@@ -1,6 +1,6 @@
 # Symlink to this file from ~/.zshrc
 # You should also symlink ~/.zshenv to zsh/env in this directory
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/Developer/usr/bin:~/Library/Python/3.7/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/Developer/usr/bin:~/Library/Python/3.7/bin:/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
 
 . ~/dotfiles/dotfiles/zsh/config
 . ~/dotfiles/dotfiles/zsh/aliases
@@ -21,3 +21,5 @@ export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export RUBYOPT='-W:no-deprecated -W:no-experimental'
