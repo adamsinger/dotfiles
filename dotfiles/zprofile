@@ -1,0 +1,25 @@
+
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# Created by `pipx` on 2025-07-04 22:54:55
+export PATH="$PATH:$HOME/.local/bin"
+
+
+
+# >>> codex_continue function (Codex CLI) >>>
+# Minimal: resume from most recent Codex JSONL session
+codex_continue() {
+  local latest
+  latest=$(find "$HOME/.codex/sessions" -type f -name '*.jsonl' -print0 2>/dev/null | xargs -0 ls -t 2>/dev/null | head -n 1)
+  if [ -z "$latest" ]; then
+    echo "No session files found in ~/.codex/sessions"
+    return 1
+  fi
+  echo "Resuming from: $latest"
+  codex --config experimental_resume="$latest" "$@"
+}
+# <<< codex_continue function (Codex CLI) <<<

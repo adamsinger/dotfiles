@@ -1,2 +1,4 @@
 .DS_Store
 agents/skills/rocketsim
+agents/skills/synced/
+agents/skills/.trash/

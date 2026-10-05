@@ -1,25 +1,143 @@
-# Symlink to this file from ~/.zshrc
-# You should also symlink ~/.zshenv to zsh/env in this directory
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/Developer/usr/bin:~/Library/Python/3.7/bin:/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
+# ===========================================
+# PATH Configuration (consolidated)
+# ===========================================
+typeset -U path
+path=(/opt/homebrew/bin /opt/homebrew/sbin /usr/local/bin /usr/local/sbin
+      "$HOME/Library/Python/3.9/bin" "$HOME/.local/bin" $path)
+export PATH
 
-. ~/dotfiles/dotfiles/zsh/config
-. ~/dotfiles/dotfiles/zsh/aliases
-. ~/dotfiles/dotfiles/zsh/colors
+# ===========================================
+# Tool Initialization
+# ===========================================
 
-# export GREP_OPTIONS=' --color=auto'
-# export CLICOLOR=1
-#
-# export PATH="$HOME/.rbenv/bin:$PATH"
-# eval "$(rbenv init -)"
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-export PATH=$HOME/.rbenv/bin:$PATH
+# rbenv
+if command -v rbenv >/dev/null 2>&1; then
+    eval "$(rbenv init - zsh)"
+fi
 
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
-export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
-#export PATH=/usr/local/opt/python/libexec/bin:$PATH
+# Oh My Posh prompt
+if command -v oh-my-posh >/dev/null 2>&1; then
+    eval "$(oh-my-posh init zsh --config "$HOME/.config/oh-my-posh/marcduiker.omp.json")"
+fi
 
+# NVM - Lazy loaded for faster shell startup
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+    nvm() { unset -f nvm node npm npx; . "$NVM_DIR/nvm.sh"; nvm "$@"; }
+    node() { unset -f nvm node npm npx; . "$NVM_DIR/nvm.sh"; command node "$@"; }
+    npm() { unset -f nvm node npm npx; . "$NVM_DIR/nvm.sh"; command npm "$@"; }
+    npx() { unset -f nvm node npm npx; . "$NVM_DIR/nvm.sh"; command npx "$@"; }
+fi
 
-export RUBYOPT='-W:no-deprecated -W:no-experimental'
+# ===========================================
+# Aliases file
+# ===========================================
+[[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
+
+# ===========================================
+# iOS/Xcode Development
+# ===========================================
+
+# Simulator shortcuts
+alias simlist="xcrun simctl list devices available"
+alias simboot="xcrun simctl boot"
+alias simopen="open -a Simulator"
+
+# Xcode version management
+alias xclist="xcode-select -p && ls /Applications | grep Xcode"
+xcswitch() { sudo xcode-select -s "/Applications/$1.app/Contents/Developer"; }
+
+# DerivedData cleanup
+alias nuked="rm -rf ~/Library/Developer/Xcode/DerivedData && echo 'DerivedData nuked'"
+
+# Open Xcode project/workspace from current directory
+xc() {
+    if ls *.xcworkspace 1> /dev/null 2>&1; then
+        open *.xcworkspace
+    elif ls *.xcodeproj 1> /dev/null 2>&1; then
+        open *.xcodeproj
+    else
+        echo "No Xcode project found"
+    fi
+}
+
+# Swift Package Manager shortcuts
+alias spb="swift build"
+alias spt="swift test"
+alias spr="swift run"
+alias spu="swift package update"
+
+# ===========================================
+# macOS Utilities
+# ===========================================
+
+# cd to Finder's frontmost window
+cdf() { cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"; }
+
+# ===========================================
+# AI Tools
+# ===========================================
+
+cdx() {
+    if [[ "$1" == "update" ]]; then
+        npm install -g @openai/codex@latest
+    else
+        codex \
+            --model 'gpt-5-codex' \
+            -c model_reasoning_summary_format=experimental \
+            --search "$@"
+    fi
+}
+
+# ===========================================
+# Shell Behavior
+# ===========================================
+
+# Keep commands available across terminal apps; import other sessions on demand.
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=100000
+SAVEHIST=50000
+setopt EXTENDED_HISTORY INC_APPEND_HISTORY HIST_IGNORE_DUPS
+setopt HIST_EXPIRE_DUPS_FIRST HIST_FIND_NO_DUPS HIST_SAVE_NO_DUPS HIST_REDUCE_BLANKS
+
+# Add blank line before each prompt
+precmd() { echo }
+
+if [[ "${TERM_PROGRAM:-}" != WarpTerminal ]]; then
+    zmodload zsh/complist
+    autoload -Uz compinit
+    compinit
+    zstyle ':completion:*' menu select
+    zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+    if command -v fzf >/dev/null 2>&1; then
+        source <(fzf --zsh)
+    fi
+fi
+
+if command -v zoxide >/dev/null 2>&1; then
+    if [[ "${TERM_PROGRAM:-}" == WarpTerminal ]]; then
+        # Register directory hooks without installing input-editor widgets in Warp.
+        () {
+            setopt localoptions
+            unsetopt zle
+            eval "$(zoxide init zsh --hook pwd)"
+        }
+    else
+        eval "$(zoxide init zsh --hook pwd)"
+    fi
+fi
+
+if [[ "${TERM_PROGRAM:-}" != WarpTerminal ]]; then
+    _dotfiles_brew_prefix="${HOMEBREW_PREFIX:-/opt/homebrew}"
+    [[ -d "$_dotfiles_brew_prefix" ]] || _dotfiles_brew_prefix=/usr/local
+
+    if [[ -r "$_dotfiles_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+        source "$_dotfiles_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    fi
+    # Syntax highlighting must load after other widgets and integrations.
+    if [[ -r "$_dotfiles_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+        source "$_dotfiles_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    fi
+    unset _dotfiles_brew_prefix
+fi

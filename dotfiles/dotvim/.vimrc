@@ -1,6 +1,6 @@
+set nocompatible                " choose no compatibility with legacy vi
 call pathogen#infect()
 
-set nocompatible                " choose no compatibility with legacy vi
 syntax enable
 set encoding=utf-8
 set showcmd                     " display incomplete commands
@@ -79,4 +79,3 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 " ctags
 set tags=.tags,gems.tags,.gems.tags
 noremap <leader>pt :!ctags -RV --languages=ruby -f .gems.tags `gem env gemdir` && ctags -f .tags -RV . <cr>
-
