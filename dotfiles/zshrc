@@ -1,3 +1,5 @@
+# Load device-local environment overrides when present.
+[[ -f "$HOME/.zshenv" ]] && source "$HOME/.zshenv"
 # ===========================================
 # PATH Configuration (consolidated)
 # ===========================================
