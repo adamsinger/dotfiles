@@ -125,6 +125,29 @@ link_file "$DOTFILES_DIR/vimrc.local" "$HOME/.vimrc.local"
 link_file "$DOTFILES_DIR/gvimrc" "$HOME/.gvimrc"
 run mkdir -p "$HOME/.vim-tmp"
 
+GLOBAL_RUBY_VERSION=4.0.7
+if ! rbenv prefix "$GLOBAL_RUBY_VERSION" >/dev/null 2>&1; then
+  # ruby-build only knows Ruby versions released before its own release.
+  if ! ruby-build --definitions 2>/dev/null | grep -qx "$GLOBAL_RUBY_VERSION"; then
+    run "$BREW" upgrade ruby-build
+  fi
+  run rbenv install "$GLOBAL_RUBY_VERSION"
+fi
+run rbenv global "$GLOBAL_RUBY_VERSION"
+# A .ruby-version in the current directory would otherwise override the global version.
+run env RBENV_VERSION="$GLOBAL_RUBY_VERSION" rbenv exec gem update bundler
+
+# Check a clean login shell so an rbenv PATH inherited from this terminal can't hide a broken zshrc.
+if ! "$DRY_RUN"; then
+  login_ruby="$(env -i HOME="$HOME" USER="$USER" TERM="${TERM:-xterm-256color}" \
+    /bin/zsh -lic 'command -v ruby' 2>/dev/null </dev/null | tail -n 1)"
+  if [ "$login_ruby" != "$(rbenv root)/shims/ruby" ]; then
+    printf 'New zsh shells use %s instead of rbenv'\''s Ruby. Check PATH in ~/.zshrc.\n' "${login_ruby:-no ruby}" >&2
+    exit 1
+  fi
+  printf 'Global Ruby: %s via %s\n' "$(rbenv global)" "$login_ruby"
+fi
+
 # Match the font in this Mac's default Terminal profile.
 run osascript \
   -e 'tell application "Terminal"' \
@@ -140,7 +163,7 @@ fi
 if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
   echo "NVM is not installed. Follow https://github.com/nvm-sh/nvm#installing-and-updating, then install your Node version."
 fi
-echo "Ruby and Node runtimes, global packages, and AI CLIs are not copied by this installer."
+echo "Node runtimes, global packages, and AI CLIs are not copied by this installer."
 echo "Open a new terminal window to load the shell and prompt."
 echo "Restart Warp, then select Hack Nerd Font at 13 pt in Settings > Appearance > Text."
 echo "To use the saved Oh My Posh prompt in Warp, select the Shell (PS1) input/prompt option."
