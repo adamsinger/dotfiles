@@ -34,6 +34,10 @@ link workspace/CLAUDE.md  "$HOME/workspace/CLAUDE.md"
 link skills               "$HOME/.agents/skills"
 link skills               "$HOME/.claude/skills"
 
+for codex_home in "$HOME"/.openclaw/agents/*/agent/codex-home(N/); do
+  link AGENTS.md "$codex_home/AGENTS.md"
+done
+
 # RocketSim ships its skill inside the app bundle.
 ROCKETSIM_SKILL="/Applications/RocketSim.app/Contents/Resources/Agent-Skill/rocketsim"
 if [[ -d "$ROCKETSIM_SKILL" ]]; then

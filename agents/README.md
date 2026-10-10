@@ -4,7 +4,7 @@ Shared instructions and skills for Claude Code and Codex. `install.sh` symlinks 
 
 | Repo path | Linked from |
 |---|---|
-| `AGENTS.md` | `~/.codex/AGENTS.md` |
+| `AGENTS.md` | `~/.codex/AGENTS.md` and existing `~/.openclaw/agents/*/agent/codex-home/AGENTS.md` |
 | `CLAUDE.md` (imports `~/.codex/AGENTS.md`) | `~/.claude/CLAUDE.md` |
 | `workspace/AGENTS.md` | `~/workspace/AGENTS.md` |
 | `workspace/CLAUDE.md` (imports `AGENTS.md`) | `~/workspace/CLAUDE.md` |
@@ -20,6 +20,8 @@ git clone <remote> ~/workspace/dotfiles
 This script is separate from the top-level `install.sh`. The repo can live anywhere; the links point to wherever the script runs from.
 
 Plugins are not stored here. Install them from each tool's marketplace.
+
+OpenClaw's isolated Codex homes use their own global `AGENTS.md`. The installer links it into existing homes; skills are already discovered through `~/.agents/skills`.
 
 ## Skills
 
